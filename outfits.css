@@ -1,0 +1,38 @@
+#mimoon-collection-preview {
+  .outfit-gallery-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:25px 0 15px}
+  .outfit-gallery-heading h3{margin:0;color:#38244f;font-size:20px}.outfit-gallery-heading p{margin:0;color:#6d537f;font-size:12px}
+  .outfit-group-switch{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:17px}
+  .outfit-group-switch button{min-height:40px;padding:8px 14px;border-radius:11px;border:1px solid #e0d0ef;background:#fff;color:#644582;font-size:13px}
+  .outfit-group-switch button[aria-pressed=true]{background:#ede1f9;border-color:#c3a4df;color:#51287e}
+  .outfit-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .outfit-card{min-width:0;overflow:hidden;border-radius:17px;border:1px solid #e3d2f1;background:transparent;box-shadow:0 7px 20px #68438a11;transition:box-shadow .2s,border-color .2s}
+  .outfit-card:hover,.outfit-card:focus-within{border-color:#c4a0e3;box-shadow:0 12px 28px #68438a20}
+  .outfit-card-button{display:block;width:100%;padding:0;text-align:left;background:none;border:0;color:#37264c}
+  .outfit-card-button:focus-visible{outline-offset:-3px}
+  .outfit-thumb,.outfit-preview-stage{background:transparent}
+  .outfit-thumb{position:relative;display:block;aspect-ratio:5/4;overflow:hidden;--thumb-inset:14px}
+  .outfit-thumb.is-avatar,.outfit-thumb.is-ride{aspect-ratio:1}
+  .outfit-thumb.is-portrait-ride{aspect-ratio:3/4}
+  .outfit-thumb img,.outfit-thumb video{position:absolute;inset:var(--thumb-inset);width:calc(100% - 2 * var(--thumb-inset));height:calc(100% - 2 * var(--thumb-inset));object-fit:contain;pointer-events:none}
+  .outfit-card-copy{display:block;min-height:53px;padding:16px 14px;text-align:center;font-size:13px;font-weight:600;overflow-wrap:anywhere;background:#ede1f95c}
+  #outfit-dialog{background:transparent;border-color:#f1e5ff8c}
+  #outfit-dialog::backdrop{background:#55406370}
+  .outfit-preview-body{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);background:transparent}
+  .outfit-preview-stage{display:grid;grid-template: minmax(0,1fr) / minmax(0,1fr);place-items:center;--outfit-stage-height:min(58vh,450px);height:var(--outfit-stage-height);padding:15px;overflow:hidden}
+  .outfit-preview-stage.is-ride{width:min(100%,var(--outfit-stage-height));height:auto;aspect-ratio:1;place-self:center}
+  .outfit-preview-stage.is-portrait-ride{width:min(100%,var(--outfit-stage-height) * .75);aspect-ratio:3/4}
+  .outfit-preview-stage img,.outfit-preview-stage video{display:block;width:100%;height:100%;min-height:0;min-width:0;object-fit:contain}
+  .outfit-preview-stage .outfit-source{display:block;width:100%;height:100%;min-width:0;min-height:0;overflow:hidden}
+  .outfit-preview-stage > canvas.outfit-source{object-fit:contain}
+  .outfit-preview-stage.is-avatar img{width:min(100%,var(--outfit-stage-height) - 30px);height:auto;aspect-ratio:1}
+  .outfit-preview-info{display:flex;flex-direction:column;justify-content:center;padding:44px 23px 25px;min-width:0;text-align:center;background:#eee2f7}
+  .outfit-preview-info h2{margin:0 0 18px;font-size:clamp(20px,4vw,32px);overflow-wrap:anywhere}
+  .outfit-preview-thumbnail{display:grid;justify-items:center;gap:8px;margin:0;color:#6d537f;font-size:12px}
+  .outfit-preview-thumbnail img{display:block;width:min(100%,142px);aspect-ratio:1;object-fit:contain}
+  @media(max-width:680px){.outfit-card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.outfit-thumb{--thumb-inset:9px}.outfit-card-copy{padding:11px;font-size:12px}.outfit-preview-body{grid-template-columns:1fr}.outfit-preview-stage{--outfit-stage-height:min(48vh,390px)}.outfit-preview-info{padding:18px 20px 24px}}
+}
+
+#mimoon-collection-preview {
+  .outfit-group-switch button {background:transparent;border-color:transparent}
+  .outfit-group-switch button[aria-pressed=true] {background:#eee2f7;border-color:#dfcdec}
+}

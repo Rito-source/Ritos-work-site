@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="RIto 的网页与虚拟装扮作品集。">
+  <title>RIto‘s Work</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="outfits.css">
+  <script defer src="outfits-data.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+<div id="mimoon-collection-preview">
+
+  <a class="skip-link" href="#collection">跳到作品列表</a>
+  <header class="site-header">
+    <h1 class="site-title"><a class="brand" href="#" aria-label="RIto‘s Work 首页"><span class="brand-symbol" aria-hidden="true">✳</span><span>RIto‘s Work</span></a></h1>
+  </header>
+
+  <main>
+    <section class="collection" id="collection" aria-label="作品集">
+      <div class="type-tabs" role="tablist" aria-label="作品大类">
+        <button class="type-tab active" id="tab-event" role="tab" aria-selected="true" aria-controls="works-panel" data-type="event"><span aria-hidden="true">▤</span><span>网页</span><span class="tab-count">29</span></button>
+        <button class="type-tab" id="tab-outfit" role="tab" aria-selected="false" aria-controls="works-panel" tabindex="-1" data-type="outfit"><span aria-hidden="true">✦</span><span>虚拟装扮</span><span class="tab-count" id="outfit-total">44</span></button>
+      </div>
+      <div id="works-panel" role="tabpanel" aria-labelledby="tab-event">
+        <div id="outfit-content" hidden>
+          <div class="outfit-tabs" role="tablist" aria-label="虚拟装扮分类">
+            <button class="outfit-tab active" id="outfit-tab-frame" role="tab" aria-selected="true" aria-controls="outfit-panel" data-outfit="frame">头像框</button>
+            <button class="outfit-tab" id="outfit-tab-seat" role="tab" aria-selected="false" aria-controls="outfit-panel" tabindex="-1" data-outfit="seat">座位框</button>
+            <button class="outfit-tab" id="outfit-tab-ride" role="tab" aria-selected="false" aria-controls="outfit-panel" tabindex="-1" data-outfit="ride">座驾</button>
+          </div>
+          <div id="outfit-panel" role="tabpanel" aria-labelledby="outfit-tab-frame"><div id="outfit-gallery"></div></div>
+        </div>
+        <details class="gallery-filters" id="gallery-filters">
+          <summary>搜索与筛选</summary>
+          <div class="filter-bar">
+            <div class="search-wrap"><input id="search" type="search" placeholder="搜索活动名称、主题或内容…" aria-label="搜索作品"><kbd aria-hidden="true">/</kbd></div>
+            <label class="select-wrap"><span class="sr-only">按系列筛选</span><select id="series" aria-label="按系列筛选"><option value="all">全部系列</option><option>史莱姆系列</option><option>真爱系列</option><option>家族互动</option><option>榜单挑战</option><option>VIP 专属</option><option>主题活动</option></select><span aria-hidden="true">⌄</span></label>
+            <label class="select-wrap sort-select"><span class="sr-only">排序方式</span><select id="sort" aria-label="排序方式"><option value="newest" selected>由近及远</option><option value="oldest">由远及近</option></select><span aria-hidden="true">⌄</span></label>
+          </div>
+        </details>
+        <div class="results-line" id="results-line"><span id="result-count" role="status" aria-live="polite">正在载入作品…</span></div>
+        <div class="works-grid" id="works-grid"></div>
+        <div class="empty-state" id="empty-state" hidden></div>
+        <nav class="pagination" id="pagination" aria-label="网页作品分页" hidden></nav>
+        <noscript><p class="no-script">请开启 JavaScript 以浏览作品、搜索和筛选。</p></noscript>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="detail-dialog" aria-labelledby="detail-title">
+    <div class="detail-shell"><button class="close-dialog" id="close-dialog" aria-label="关闭作品详情">✕</button><img class="detail-image" id="detail-image" alt=""><div class="detail-content"><div class="detail-meta"><span id="detail-id"></span><span id="detail-series"></span></div><h2 id="detail-title"></h2><h3>活动简介</h3><p class="detail-description" id="detail-description"></p><div class="detail-actions"><a class="primary-button" id="detail-link" target="_blank" rel="noopener noreferrer">打开活动网页 <span aria-hidden="true">↗</span></a><button class="copy-button" id="copy-link">复制链接 <span aria-hidden="true">⧉</span></button></div><p class="source-note">活动内容与链接来自 Mimoon Event 原始作品档案。</p></div></div>
+  </dialog>
+  <dialog id="outfit-dialog" aria-labelledby="outfit-preview-title">
+    <div class="outfit-preview-body">
+      <button class="close-dialog" type="button" id="close-outfit-preview" aria-label="关闭动效预览">✕</button>
+      <div class="outfit-preview-stage" id="outfit-preview-stage"></div>
+      <div class="outfit-preview-info"><p class="eyebrow" id="outfit-preview-category"></p><h2 id="outfit-preview-title"></h2>
+        <figure class="outfit-preview-thumbnail">
+          <img id="outfit-preview-png" alt="">
+          <figcaption>PNG 缩略图</figcaption>
+        </figure>
+        <p class="frame-status" id="outfit-preview-status" role="status" hidden></p>
+      </div>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+</div>
+
+</body>
+</html>

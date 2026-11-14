@@ -413,8 +413,8 @@ async function playOutfitCard(preview) {
   image.alt = '';
   preview.pending = image;
   try {
-    const motion = row.cardMotionAvif || row.cardMotion;
-    const fallback = row.cardMotionAvif ? row.cardMotion : row.motion;
+    const motion = row.cardMotion || row.motion;
+    const fallback = row.cardMotion ? row.motion : null;
     await decodeOutfitImage(image, motion, fallback, () => request === preview.request);
     if (request === preview.request) {
       preview.pending = null;
@@ -561,7 +561,8 @@ async function playOutfitPreview(row, animation) {
   const isCurrent = () => request === outfitRequest;
   try {
     const image = outfitPoster(row);
-    await decodeOutfitImage(image, row.motion, row.fallback, isCurrent);
+    image.src = row.motion;
+    await image.decode();
     if (isCurrent()) outfitStage.replaceChildren(image);
   } catch {
     if (!isCurrent()) return;

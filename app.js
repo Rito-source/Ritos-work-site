@@ -117,7 +117,6 @@ function render() {
     renderOutfits();
     return;
   }
-  clearOutfitCards();
   let matches = state.events.filter(event => {
     const text = `${event.title} ${event.description} ${event.series} ${event.id}`.toLocaleLowerCase();
     return (!state.query || text.includes(state.query.toLocaleLowerCase())) && (state.series === 'all' || event.series === state.series);
@@ -361,81 +360,15 @@ let outfitPage = 1;
 let outfitGroup = '';
 let outfitTrigger = null;
 let outfitRequest = 0;
-const outfitCards = new Map();
-const outfitObserver = typeof IntersectionObserver === 'function' ? new IntersectionObserver(entries => {
-  for (const entry of entries) {
-    const preview = outfitCards.get(entry.target);
-    if (preview) preview.visible = entry.isIntersecting;
-  }
-  syncOutfitCards();
-}, { rootMargin: '160px 0px' }) : null;
-
-function clearOutfitCards() {
-  outfitObserver?.disconnect();
-  for (const preview of outfitCards.values()) stopOutfitCard(preview);
-  outfitCards.clear();
-}
-
-function stopOutfitCard(preview) {
-  if (!preview.playing) return;
-  preview.playing = false;
-  preview.request++;
-  preview.pending?.removeAttribute('src');
-  preview.pending = null;
-  preview.media.replaceChildren(preview.poster);
-}
-
-function syncOutfitCards() {
-  const allowed = !document.hidden && !outfitDialog.open;
-  for (const preview of outfitCards.values()) {
-    if (allowed && preview.visible) {
-      if (!preview.playing) void playOutfitCard(preview);
-    } else stopOutfitCard(preview);
-  }
-}
-
-async function decodeOutfitImage(image, motion, fallback, isCurrent) {
-  image.src = motion;
-  try { await image.decode(); }
-  catch (error) {
-    if (!fallback || !isCurrent()) throw error;
-    image.src = fallback;
-    await image.decode();
-  }
-}
-
-async function playOutfitCard(preview) {
-  if (preview.failed) return;
-  const { row, media } = preview;
-  const request = ++preview.request;
-  preview.playing = true;
-  const image = element('img');
-  image.alt = '';
-  preview.pending = image;
-  try {
-    const motion = row.cardMotion || row.motion;
-    const fallback = row.cardMotion ? row.motion : null;
-    await decodeOutfitImage(image, motion, fallback, () => request === preview.request);
-    if (request === preview.request) {
-      preview.pending = null;
-      media.replaceChildren(image);
-    }
-  } catch {
-    if (request === preview.request) {
-      preview.failed = true;
-      stopOutfitCard(preview);
-    }
-  }
-}
-
-document.addEventListener('visibilitychange', syncOutfitCards);
+let outfitAudioContext;
+let outfitAudioRequest;
+let outfitAudioSource;
 
 function renderOutfits() {
-  clearOutfitCards();
   const category = state.outfitType;
   const rows = outfitRows.filter(row => row.category === category &&
     (category === 'ride' || row.group === outfitGroup));
-  if (category === 'frame') rows.sort((a, b) => Number(a.kind === 'still') - Number(b.kind === 'still'));
+  rows.sort((a, b) => Number(Boolean(b.motion)) - Number(Boolean(a.motion)));
   const pages = category === 'ride' ? RIDE_PAGES.length : Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
   outfitPage = Math.min(outfitPage, pages);
   const visibleRows = category === 'ride'
@@ -468,41 +401,30 @@ function renderOutfits() {
     const card = element('article', 'outfit-card');
     const button = element('button', 'outfit-card-button');
     button.type = 'button';
-    button.setAttribute('aria-label', category === 'ride'
-      ? `播放 ${row.title}`
-      : `预览${row.title}${row.kind === 'still' ? '' : '动效'}`);
+    button.setAttribute('aria-label', row.motion ? `播放 ${row.title}` : `预览 ${row.title}`);
+    button.setAttribute('aria-haspopup', 'dialog');
     const media = element('span', 'outfit-thumb');
     media.classList.toggle('is-avatar', category === 'frame');
     media.classList.toggle('is-ride', category === 'ride');
     media.classList.toggle('is-portrait-ride', category === 'ride' && row.group === '3:4');
     const image = element('img');
     if (index < 3) image.fetchPriority = 'high';
+    else image.loading = 'lazy';
     image.src = row.cover;
     image.alt = '';
-    const title = element('span', 'outfit-card-copy', row.title);
+    const controls = element('span', 'outfit-card-controls');
     media.append(image);
-    if (category === 'ride') {
+    if (row.motion) {
       const playIcon = element('span', 'outfit-play-icon');
       playIcon.setAttribute('aria-hidden', 'true');
-      media.append(playIcon);
+      controls.append(playIcon);
     }
-    button.append(media, title);
-    button.addEventListener('click', () => {
-      const preview = outfitCards.get(card);
-      const animation = preview?.playing && media.firstElementChild !== image
-        ? media.firstElementChild
-        : null;
-      openOutfitPreview(row, button, animation);
-    });
+    button.append(media, controls, element('span', 'outfit-card-copy', row.title));
+    button.addEventListener('click', () => openOutfitPreview(row, button));
     card.append(button);
     cards.append(card);
-    if (category !== 'ride' && row.kind !== 'still') {
-      outfitCards.set(card, { row, media, poster: image, visible: !outfitObserver, playing: false, request: 0 });
-    }
   }
   outfitGallery.append(cards);
-  for (const card of outfitCards.keys()) outfitObserver?.observe(card);
-  syncOutfitCards();
   if (pages <= 1) return;
   const pagination = element('nav', 'pagination');
   pagination.setAttribute('aria-label', `${types[category].title}分页`);
@@ -535,7 +457,7 @@ function outfitPoster(row) {
   return image;
 }
 
-function openOutfitPreview(row, trigger, animation) {
+function openOutfitPreview(row, trigger) {
   outfitTrigger = trigger;
   outfitStage.classList.toggle('is-avatar', row.category === 'frame');
   outfitStage.classList.toggle('is-ride', row.category === 'ride');
@@ -547,40 +469,72 @@ function openOutfitPreview(row, trigger, animation) {
   outfitPNG.alt = `${row.title}的透明缩略图`;
   outfitStatus.hidden = true;
   outfitDialog.showModal();
-  syncOutfitCards();
   $('#close-outfit-preview').focus();
-  if (animation) {
-    animation.alt = row.title;
-    outfitStage.replaceChildren(animation);
-  }
-  if (row.motion) void playOutfitPreview(row, animation);
+  if (row.motion) void playOutfitPreview(row);
 }
 
-async function playOutfitPreview(row, animation) {
+async function playOutfitPreview(row) {
   const request = ++outfitRequest;
-  const isCurrent = () => request === outfitRequest;
+  const isCurrent = () => request === outfitRequest && outfitDialog.open;
+  outfitStatus.textContent = '正在载入高清动效…';
+  outfitStatus.hidden = false;
   try {
-    const image = outfitPoster(row);
+    const image = element('img');
+    image.alt = row.title;
     image.src = row.motion;
-    await image.decode();
-    if (isCurrent()) outfitStage.replaceChildren(image);
+    const [sound] = await Promise.all([loadOutfitSound(row.audio), image.decode()]);
+    if (isCurrent()) {
+      outfitStage.replaceChildren(image);
+      outfitStatus.hidden = true;
+      if (sound) {
+        outfitAudioSource = outfitAudioContext.createBufferSource();
+        outfitAudioSource.buffer = sound;
+        outfitAudioSource.loop = true;
+        outfitAudioSource.loopEnd = row.audio.durationMs / 1000;
+        outfitAudioSource.connect(outfitAudioContext.destination);
+        outfitAudioSource.start();
+      } else if (row.audio) {
+        outfitStatus.textContent = '声音暂时无法播放。';
+        outfitStatus.hidden = false;
+      }
+    }
   } catch {
     if (!isCurrent()) return;
-    if (animation?.parentNode === outfitStage) return;
-    outfitStage.replaceChildren(outfitPoster(row));
     outfitStatus.textContent = '此浏览器暂时无法播放动效，可以查看静态预览。';
     outfitStatus.hidden = false;
+  }
+}
+
+async function loadOutfitSound(audio) {
+  if (!audio) return null;
+  try {
+    outfitAudioContext ??= new AudioContext();
+    outfitAudioRequest = new AbortController();
+    const [, response] = await Promise.all([
+      outfitAudioContext.resume(),
+      fetch(audio.file, { signal: outfitAudioRequest.signal }),
+    ]);
+    if (!response.ok) return null;
+    return await outfitAudioContext.decodeAudioData(await response.arrayBuffer());
+  } catch {
+    return null;
   }
 }
 
 $('#close-outfit-preview').addEventListener('click', () => outfitDialog.close());
 outfitDialog.addEventListener('close', () => {
   outfitRequest++;
+  outfitAudioRequest?.abort();
+  outfitAudioRequest = null;
+  if (outfitAudioSource) {
+    outfitAudioSource.stop();
+    outfitAudioSource.disconnect();
+    outfitAudioSource = null;
+  }
   outfitStage.replaceChildren();
   outfitPNG.removeAttribute('src');
   outfitTrigger?.focus({ preventScroll: true });
   outfitTrigger = null;
-  syncOutfitCards();
 });
 
 async function init() {

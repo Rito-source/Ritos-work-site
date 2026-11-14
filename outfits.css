@@ -14,25 +14,29 @@
   .outfit-thumb.is-avatar,.outfit-thumb.is-ride{aspect-ratio:1}
   .outfit-thumb.is-portrait-ride{aspect-ratio:3/4}
   .outfit-thumb img,.outfit-thumb video{position:absolute;inset:var(--thumb-inset);width:calc(100% - 2 * var(--thumb-inset));height:calc(100% - 2 * var(--thumb-inset));object-fit:contain;pointer-events:none}
+  .outfit-card-controls {
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    height:26px;
+    padding:0 10px 4px;
+  }
   .outfit-play-icon {
-    position:absolute;
-    right:10px;
-    bottom:10px;
     display:grid;
     place-items:center;
-    width:44px;
-    height:44px;
+    width:20px;
+    height:20px;
     border:1px solid #fff9;
     border-radius:50%;
     background:#553477;
     color:#fff;
-    box-shadow:0 3px 12px #37264c40;
+    box-shadow:0 2px 6px #37264c30;
   }
   .outfit-play-icon::before {
     content:'';
-    width:14px;
-    height:16px;
-    margin-left:3px;
+    width:7px;
+    height:8px;
+    margin-left:2px;
     background:currentColor;
     clip-path:polygon(0 0,100% 50%,0 100%);
   }
@@ -43,12 +47,11 @@
   #outfit-dialog::backdrop{background:#55406370}
   .outfit-preview-body{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);background:transparent}
   .outfit-preview-stage{display:grid;grid-template: minmax(0,1fr) / minmax(0,1fr);place-items:center;--outfit-stage-height:min(58vh,450px);height:var(--outfit-stage-height);padding:15px;overflow:hidden}
-  .outfit-preview-stage.is-ride{width:min(100%,var(--outfit-stage-height));height:auto;aspect-ratio:1;place-self:center}
+  .outfit-preview-stage:is(.is-avatar,.is-ride){width:min(100%,var(--outfit-stage-height));height:auto;aspect-ratio:1;place-self:center}
   .outfit-preview-stage.is-portrait-ride{width:min(100%,var(--outfit-stage-height) * .75);aspect-ratio:3/4}
   .outfit-preview-stage img,.outfit-preview-stage video{display:block;width:100%;height:100%;min-height:0;min-width:0;object-fit:contain}
   .outfit-preview-stage .outfit-source{display:block;width:100%;height:100%;min-width:0;min-height:0;overflow:hidden}
   .outfit-preview-stage > canvas.outfit-source{object-fit:contain}
-  .outfit-preview-stage.is-avatar img{width:min(100%,var(--outfit-stage-height) - 30px);height:auto;aspect-ratio:1}
   .outfit-preview-info{display:flex;flex-direction:column;justify-content:center;padding:44px 23px 25px;min-width:0;text-align:center;background:#eee2f7}
   .outfit-preview-info h2{margin:0 0 18px;font-size:clamp(20px,4vw,32px);overflow-wrap:anywhere}
   .outfit-preview-thumbnail{display:grid;justify-items:center;gap:8px;margin:0;color:#6d537f;font-size:12px}

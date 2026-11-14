@@ -6,13 +6,14 @@ window.MIMOON_OUTFITS = [
     "category": "frame",
     "kind": "image",
     "cover": "assets/pag/avatar-blue-2-cover.webp",
-    "motion": "assets/pag/frame-blue-pag-compact.webp",
-    "fallback": "assets/pag/avatar-blue-2-motion.avif",
+    "motion": "assets/pag/avatar-blue-2-motion.avif",
+    "fallback": "assets/pag/frame-blue-pag-compact.webp",
     "width": 344,
     "height": 344,
     "format": "PAG",
     "png": "assets/outfits/frame-blue-pag-preview.png",
-    "cardMotion": "assets/pag/frame-blue-pag-card.webp"
+    "cardMotion": "assets/pag/frame-blue-pag-card.webp",
+    "cardMotionAvif": "assets/pag/frame-blue-pag-card.avif"
   },
   {
     "id": "frame-01",
@@ -63,7 +64,8 @@ window.MIMOON_OUTFITS = [
     "format": "SVGA",
     "png": "assets/outfits/frame-04-preview.png",
     "fallback": "assets/outfits/frame-04.avif",
-    "cardMotion": "assets/outfits/frame-04-card.webp"
+    "cardMotion": "assets/outfits/frame-04-card.webp",
+    "cardMotionAvif": "assets/outfits/frame-04-card.avif"
   },
   {
     "id": "frame-05",
@@ -84,13 +86,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-01.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-01-compact.webp",
+    "motion": "assets/outfits/seat-01.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-01-preview.png",
-    "fallback": "assets/outfits/seat-01.avif",
-    "cardMotion": "assets/outfits/seat-01-card.webp"
+    "fallback": "assets/outfits/seat-01-compact.webp",
+    "cardMotion": "assets/outfits/seat-01-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-01-card.avif"
   },
   {
     "id": "seat-02",
@@ -99,13 +102,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-02.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-02-compact.webp",
+    "motion": "assets/outfits/seat-02.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-02-preview.png",
-    "fallback": "assets/outfits/seat-02.avif",
-    "cardMotion": "assets/outfits/seat-02-card.webp"
+    "fallback": "assets/outfits/seat-02-compact.webp",
+    "cardMotion": "assets/outfits/seat-02-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-02-card.avif"
   },
   {
     "id": "seat-03",
@@ -114,13 +118,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-03.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-03-compact.webp",
+    "motion": "assets/outfits/seat-03.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-03-preview.png",
-    "fallback": "assets/outfits/seat-03.avif",
-    "cardMotion": "assets/outfits/seat-03-card.webp"
+    "fallback": "assets/outfits/seat-03-compact.webp",
+    "cardMotion": "assets/outfits/seat-03-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-03-card.avif"
   },
   {
     "id": "seat-04",
@@ -129,13 +134,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-04.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-04-compact.webp",
+    "motion": "assets/outfits/seat-04.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-04-preview.png",
-    "fallback": "assets/outfits/seat-04.avif",
-    "cardMotion": "assets/outfits/seat-04-card.webp"
+    "fallback": "assets/outfits/seat-04-compact.webp",
+    "cardMotion": "assets/outfits/seat-04-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-04-card.avif"
   },
   {
     "id": "seat-05",
@@ -144,13 +150,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-05.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-05-compact.webp",
+    "motion": "assets/outfits/seat-05.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-05-preview.png",
-    "fallback": "assets/outfits/seat-05.avif",
-    "cardMotion": "assets/outfits/seat-05-card.webp"
+    "fallback": "assets/outfits/seat-05-compact.webp",
+    "cardMotion": "assets/outfits/seat-05-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-05-card.avif"
   },
   {
     "id": "seat-06",
@@ -159,13 +166,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-06.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-06-compact.webp",
+    "motion": "assets/outfits/seat-06.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-06-preview.png",
-    "fallback": "assets/outfits/seat-06.avif",
-    "cardMotion": "assets/outfits/seat-06-card.webp"
+    "fallback": "assets/outfits/seat-06-compact.webp",
+    "cardMotion": "assets/outfits/seat-06-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-06-card.avif"
   },
   {
     "id": "seat-07",
@@ -174,13 +182,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-07.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-07-compact.webp",
+    "motion": "assets/outfits/seat-07.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-07-preview.png",
-    "fallback": "assets/outfits/seat-07.avif",
-    "cardMotion": "assets/outfits/seat-07-card.webp"
+    "fallback": "assets/outfits/seat-07-compact.webp",
+    "cardMotion": "assets/outfits/seat-07-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-07-card.avif"
   },
   {
     "id": "seat-08",
@@ -201,13 +210,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-09.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-09-compact.webp",
+    "motion": "assets/outfits/seat-09.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-09-preview.png",
-    "fallback": "assets/outfits/seat-09.avif",
-    "cardMotion": "assets/outfits/seat-09-card.webp"
+    "fallback": "assets/outfits/seat-09-compact.webp",
+    "cardMotion": "assets/outfits/seat-09-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-09-card.avif"
   },
   {
     "id": "seat-10",
@@ -216,13 +226,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-10.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-10-compact.webp",
+    "motion": "assets/outfits/seat-10.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-10-preview.png",
-    "fallback": "assets/outfits/seat-10.avif",
-    "cardMotion": "assets/outfits/seat-10-card.webp"
+    "fallback": "assets/outfits/seat-10-compact.webp",
+    "cardMotion": "assets/outfits/seat-10-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-10-card.avif"
   },
   {
     "id": "seat-11",
@@ -231,13 +242,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-11.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-11-compact.webp",
+    "motion": "assets/outfits/seat-11.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-11-preview.png",
-    "fallback": "assets/outfits/seat-11.avif",
-    "cardMotion": "assets/outfits/seat-11-card.webp"
+    "fallback": "assets/outfits/seat-11-compact.webp",
+    "cardMotion": "assets/outfits/seat-11-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-11-card.avif"
   },
   {
     "id": "seat-12",
@@ -258,13 +270,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-13.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-13-compact.webp",
+    "motion": "assets/outfits/seat-13.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-13-preview.png",
-    "fallback": "assets/outfits/seat-13.avif",
-    "cardMotion": "assets/outfits/seat-13-card.webp"
+    "fallback": "assets/outfits/seat-13-compact.webp",
+    "cardMotion": "assets/outfits/seat-13-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-13-card.avif"
   },
   {
     "id": "seat-14",
@@ -273,13 +286,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-14.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-14-compact.webp",
+    "motion": "assets/outfits/seat-14.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-14-preview.png",
-    "fallback": "assets/outfits/seat-14.avif",
-    "cardMotion": "assets/outfits/seat-14-card.webp"
+    "fallback": "assets/outfits/seat-14-compact.webp",
+    "cardMotion": "assets/outfits/seat-14-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-14-card.avif"
   },
   {
     "id": "seat-15",
@@ -288,13 +302,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-15.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-15-compact.webp",
+    "motion": "assets/outfits/seat-15.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-15-preview.png",
-    "fallback": "assets/outfits/seat-15.avif",
-    "cardMotion": "assets/outfits/seat-15-card.webp"
+    "fallback": "assets/outfits/seat-15-compact.webp",
+    "cardMotion": "assets/outfits/seat-15-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-15-card.avif"
   },
   {
     "id": "seat-16",
@@ -303,13 +318,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-16.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-16-compact.webp",
+    "motion": "assets/outfits/seat-16.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-16-preview.png",
-    "fallback": "assets/outfits/seat-16.avif",
-    "cardMotion": "assets/outfits/seat-16-card.webp"
+    "fallback": "assets/outfits/seat-16-compact.webp",
+    "cardMotion": "assets/outfits/seat-16-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-16-card.avif"
   },
   {
     "id": "seat-17",
@@ -318,13 +334,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-17.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-17-compact.webp",
+    "motion": "assets/outfits/seat-17.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-17-preview.png",
-    "fallback": "assets/outfits/seat-17.avif",
-    "cardMotion": "assets/outfits/seat-17-card.webp"
+    "fallback": "assets/outfits/seat-17-compact.webp",
+    "cardMotion": "assets/outfits/seat-17-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-17-card.avif"
   },
   {
     "id": "seat-18",
@@ -333,13 +350,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-18.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-18-compact.webp",
+    "motion": "assets/outfits/seat-18.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-18-preview.png",
-    "fallback": "assets/outfits/seat-18.avif",
-    "cardMotion": "assets/outfits/seat-18-card.webp"
+    "fallback": "assets/outfits/seat-18-compact.webp",
+    "cardMotion": "assets/outfits/seat-18-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-18-card.avif"
   },
   {
     "id": "seat-19",
@@ -348,13 +366,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-19.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-19-compact.webp",
+    "motion": "assets/outfits/seat-19.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-19-preview.png",
-    "fallback": "assets/outfits/seat-19.avif",
-    "cardMotion": "assets/outfits/seat-19-card.webp"
+    "fallback": "assets/outfits/seat-19-compact.webp",
+    "cardMotion": "assets/outfits/seat-19-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-19-card.avif"
   },
   {
     "id": "seat-20",
@@ -369,7 +388,8 @@ window.MIMOON_OUTFITS = [
     "format": "SVGA",
     "png": "assets/outfits/seat-20-preview.png",
     "fallback": "assets/outfits/seat-20.avif",
-    "cardMotion": "assets/outfits/seat-20-card.webp"
+    "cardMotion": "assets/outfits/seat-20-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-20-card.avif"
   },
   {
     "id": "seat-21",
@@ -378,13 +398,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-21.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-21-compact.webp",
+    "motion": "assets/outfits/seat-21.avif",
     "width": 300,
     "height": 300,
     "format": "SVGA",
     "png": "assets/outfits/seat-21-preview.png",
-    "fallback": "assets/outfits/seat-21.avif",
-    "cardMotion": "assets/outfits/seat-21-card.webp"
+    "fallback": "assets/outfits/seat-21-compact.webp",
+    "cardMotion": "assets/outfits/seat-21-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-21-card.avif"
   },
   {
     "id": "seat-22",
@@ -393,13 +414,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-22.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-22-compact.webp",
+    "motion": "assets/outfits/seat-22.avif",
     "width": 300,
     "height": 300,
     "format": "SVGA",
     "png": "assets/outfits/seat-22-preview.png",
-    "fallback": "assets/outfits/seat-22.avif",
-    "cardMotion": "assets/outfits/seat-22-card.webp"
+    "fallback": "assets/outfits/seat-22-compact.webp",
+    "cardMotion": "assets/outfits/seat-22-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-22-card.avif"
   },
   {
     "id": "seat-23",
@@ -408,13 +430,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-23.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-23-compact.webp",
+    "motion": "assets/outfits/seat-23.avif",
     "width": 300,
     "height": 300,
     "format": "SVGA",
     "png": "assets/outfits/seat-23-preview.png",
-    "fallback": "assets/outfits/seat-23.avif",
-    "cardMotion": "assets/outfits/seat-23-card.webp"
+    "fallback": "assets/outfits/seat-23-compact.webp",
+    "cardMotion": "assets/outfits/seat-23-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-23-card.avif"
   },
   {
     "id": "seat-24",
@@ -423,13 +446,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-24.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-24-compact.webp",
+    "motion": "assets/outfits/seat-24.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-24-preview.png",
-    "fallback": "assets/outfits/seat-24.avif",
-    "cardMotion": "assets/outfits/seat-24-card.webp"
+    "fallback": "assets/outfits/seat-24-compact.webp",
+    "cardMotion": "assets/outfits/seat-24-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-24-card.avif"
   },
   {
     "id": "seat-25",
@@ -438,13 +462,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-25.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-25-compact.webp",
+    "motion": "assets/outfits/seat-25.avif",
     "width": 300,
     "height": 300,
     "format": "SVGA",
     "png": "assets/outfits/seat-25-preview.png",
-    "fallback": "assets/outfits/seat-25.avif",
-    "cardMotion": "assets/outfits/seat-25-card.webp"
+    "fallback": "assets/outfits/seat-25-compact.webp",
+    "cardMotion": "assets/outfits/seat-25-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-25-card.avif"
   },
   {
     "id": "seat-26",
@@ -453,13 +478,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-26.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-26-compact.webp",
+    "motion": "assets/outfits/seat-26.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-26-preview.png",
-    "fallback": "assets/outfits/seat-26.avif",
-    "cardMotion": "assets/outfits/seat-26-card.webp"
+    "fallback": "assets/outfits/seat-26-compact.webp",
+    "cardMotion": "assets/outfits/seat-26-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-26-card.avif"
   },
   {
     "id": "seat-27",
@@ -468,13 +494,14 @@ window.MIMOON_OUTFITS = [
     "category": "seat",
     "cover": "assets/outfits/seat-27.webp",
     "kind": "image",
-    "motion": "assets/outfits/seat-27-compact.webp",
+    "motion": "assets/outfits/seat-27.avif",
     "width": 432,
     "height": 432,
     "format": "SVGA",
     "png": "assets/outfits/seat-27-preview.png",
-    "fallback": "assets/outfits/seat-27.avif",
-    "cardMotion": "assets/outfits/seat-27-card.webp"
+    "fallback": "assets/outfits/seat-27-compact.webp",
+    "cardMotion": "assets/outfits/seat-27-card.webp",
+    "cardMotionAvif": "assets/outfits/seat-27-card.avif"
   },
   {
     "id": "ride-01",
@@ -484,8 +511,8 @@ window.MIMOON_OUTFITS = [
     "cover": "assets/outfits/ride-01.webp",
     "kind": "image",
     "motion": "assets/outfits/ride-01-compact.webp",
-    "width": 229,
-    "height": 229,
+    "width": 288,
+    "height": 288,
     "format": "PAG",
     "png": "assets/outfits/ride-01-preview.png",
     "fallback": "assets/outfits/ride-01.avif",
@@ -499,8 +526,8 @@ window.MIMOON_OUTFITS = [
     "cover": "assets/outfits/ride-02.webp",
     "kind": "image",
     "motion": "assets/outfits/ride-02-compact.webp",
-    "width": 217,
-    "height": 217,
+    "width": 288,
+    "height": 288,
     "format": "PAG",
     "png": "assets/outfits/ride-02-preview.png",
     "fallback": "assets/outfits/ride-02.avif",
@@ -514,8 +541,8 @@ window.MIMOON_OUTFITS = [
     "cover": "assets/outfits/ride-03.webp",
     "kind": "image",
     "motion": "assets/outfits/ride-03-compact.webp",
-    "width": 207,
-    "height": 276,
+    "width": 216,
+    "height": 288,
     "format": "PAG",
     "png": "assets/outfits/ride-03-preview.png",
     "fallback": "assets/outfits/ride-03.avif",
@@ -529,8 +556,8 @@ window.MIMOON_OUTFITS = [
     "cover": "assets/outfits/ride-04.webp",
     "kind": "image",
     "motion": "assets/outfits/ride-04-compact.webp",
-    "width": 210,
-    "height": 280,
+    "width": 216,
+    "height": 288,
     "format": "PAG",
     "png": "assets/outfits/ride-04-preview.png",
     "fallback": "assets/outfits/ride-04.avif",
@@ -543,12 +570,12 @@ window.MIMOON_OUTFITS = [
     "category": "ride",
     "cover": "assets/outfits/ride-05.webp",
     "kind": "image",
-    "motion": "assets/outfits/ride-05-compact.webp",
-    "width": 219,
-    "height": 292,
+    "motion": "assets/outfits/ride-05.avif",
+    "width": 216,
+    "height": 288,
     "format": "PAG",
     "png": "assets/outfits/ride-05-preview.png",
-    "fallback": "assets/outfits/ride-05.avif",
+    "fallback": "assets/outfits/ride-05-compact.webp",
     "cardMotion": "assets/outfits/ride-05-card.webp"
   },
   {
@@ -559,8 +586,8 @@ window.MIMOON_OUTFITS = [
     "cover": "assets/outfits/ride-06.webp",
     "kind": "image",
     "motion": "assets/outfits/ride-06-compact.webp",
-    "width": 232,
-    "height": 232,
+    "width": 288,
+    "height": 288,
     "format": "PAG",
     "png": "assets/outfits/ride-06-preview.png",
     "fallback": "assets/outfits/ride-06.avif",
@@ -588,12 +615,12 @@ window.MIMOON_OUTFITS = [
     "category": "ride",
     "cover": "assets/outfits/ride-08.webp",
     "kind": "image",
-    "motion": "assets/outfits/ride-08-compact.webp",
-    "width": 219,
-    "height": 292,
+    "motion": "assets/outfits/ride-08.avif",
+    "width": 216,
+    "height": 288,
     "format": "PAG",
     "png": "assets/outfits/ride-08-preview.png",
-    "fallback": "assets/outfits/ride-08.avif",
+    "fallback": "assets/outfits/ride-08-compact.webp",
     "cardMotion": "assets/outfits/ride-08-card.webp"
   },
   {
@@ -604,8 +631,8 @@ window.MIMOON_OUTFITS = [
     "cover": "assets/outfits/ride-09.webp",
     "kind": "image",
     "motion": "assets/outfits/ride-09-compact.webp",
-    "width": 209,
-    "height": 209,
+    "width": 288,
+    "height": 288,
     "format": "PAG",
     "png": "assets/outfits/ride-09-preview.png",
     "fallback": "assets/outfits/ride-09.avif",
@@ -619,8 +646,8 @@ window.MIMOON_OUTFITS = [
     "cover": "assets/outfits/ride-10.webp",
     "kind": "image",
     "motion": "assets/outfits/ride-10-compact.webp",
-    "width": 210,
-    "height": 280,
+    "width": 216,
+    "height": 288,
     "format": "PAG",
     "png": "assets/outfits/ride-10-preview.png",
     "fallback": "assets/outfits/ride-10.avif",
@@ -628,17 +655,17 @@ window.MIMOON_OUTFITS = [
   },
   {
     "id": "ride-11",
-    "title": "史莱姆-6",
+    "title": "Blue Slime",
     "group": "透明抠图",
     "category": "ride",
     "cover": "assets/outfits/ride-11.webp",
     "kind": "image",
-    "motion": "assets/outfits/ride-11-compact.webp",
-    "width": 301,
-    "height": 301,
+    "motion": "assets/outfits/ride-11.avif",
+    "width": 288,
+    "height": 288,
     "format": "PAG",
     "png": "assets/outfits/ride-11-preview.png",
-    "fallback": "assets/outfits/ride-11.avif",
+    "fallback": "assets/outfits/ride-11-compact.webp",
     "cardMotion": "assets/outfits/ride-11-card.webp"
   }
 ];

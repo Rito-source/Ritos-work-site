@@ -133,15 +133,166 @@ body{margin:0}
     box-shadow:none;
   }
   .outfit-tab.active {background:#eee2f7;border-color:#dfcdec}
-  .gallery-filters {margin:0 0 10px}
-  .gallery-filters summary {
-    width:fit-content;
-    min-height:36px;
-    padding:8px 2px;
-    color:#655371;
-    cursor:pointer;
-    font-size:12px;
+  .collection-toolbar {
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:6px 12px;
+    margin-bottom:14px;
   }
-  .gallery-filters:not([open]) > .filter-bar {display:none}
-  .gallery-filters .filter-bar {margin:4px 0 12px}
+  .collection-toolbar .type-tabs {margin-bottom:0}
+  .gallery-tools {display:flex;gap:6px}
+  .gallery-tool {
+    display:grid;
+    place-items:center;
+    width:36px;
+    height:36px;
+    padding:0;
+    border:1px solid #d8c3eb;
+    border-radius:11px;
+    background:#fffc;
+    color:#67448a;
+  }
+  .gallery-tool:hover,.gallery-tool[aria-expanded=true] {
+    background:#ede0f9;
+    border-color:#c7a8e1;
+  }
+  .gallery-tool svg {width:17px;height:17px}
+  .gallery-popover {
+    position:absolute;
+    inset:calc(100% + 7px) 0 auto auto;
+    z-index:5;
+    width:min(100%,360px);
+    background:#fff;
+    border-color:#e3d2ef;
+    border-radius:14px;
+    box-shadow:0 12px 30px #55327030;
+  }
+  .gallery-search {grid-template-columns:minmax(0,1fr)}
+  .gallery-search input {padding-left:14px}
+  .gallery-filters {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+#mimoon-collection-preview {
+  background:
+    radial-gradient(circle,#9369b92a .8px,transparent 1.3px) center top / 24px 24px,
+    radial-gradient(ellipse at 0 2%,#e1cdfb,transparent 48%),
+    radial-gradient(ellipse at 94% 0%,#f9d3e5,transparent 41%),
+    radial-gradient(ellipse at 100% 64%,#fbe1ca,transparent 44%),
+    radial-gradient(ellipse at 2% 79%,#dfdffa,transparent 45%),
+    linear-gradient(148deg,#f2e9ff,#fff9f7 53%,#f5ecff);
+  &::after {
+    content:'';
+    position:absolute;
+    z-index:-1;
+    top:-130px;
+    right:-175px;
+    width:min(82vw,1000px);
+    height:380px;
+    border:1px solid #ba8ebd40;
+    border-radius:50%;
+    transform:rotate(-13deg);
+    box-shadow:0 0 0 18px #fff6,0 0 0 20px #e8b1bb29,0 0 0 40px #ffffff36,0 0 0 42px #bd92c22e,0 0 55px #fff8;
+    pointer-events:none;
+  }
+  .header-sparks {position:absolute;inset:0 28px 0 auto;width:122px;pointer-events:none}
+  .header-sparks i {
+    position:absolute;
+    width:25px;
+    aspect-ratio:1;
+    background:linear-gradient(145deg,#a674c5,#e6a7b9);
+    clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);
+    top:21px;
+    right:27px;
+  }
+  .header-sparks i:nth-child(2) {width:13px;top:15px;right:8px;background:#b98662}
+  .header-sparks i:nth-child(3) {width:12px;top:40px;right:58px;background:#b593cf}
+  .work-card .card-main {width:100%;display:flex;flex-direction:column}
+  .work-card .card-main::after {content:none}
+  .work-card .card-image {display:block;width:100%;aspect-ratio:auto;overflow:visible}
+  .work-card .card-image img,.detail-image {width:100%;height:auto;aspect-ratio:auto;object-fit:contain}
+  .work-card .card-body,.detail-heading {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:start;
+    gap:10px;
+    width:100%;
+  }
+  .work-card .series-tag,.detail-heading .series-tag {
+    margin-top:2px;
+    background:#f5ecfb;
+    color:#603d76;
+    border-color:#e7d5f0;
+  }
+  .work-card .card-title {
+    display:block;
+    margin:0;
+    font-size:clamp(15px,2vw,17px);
+    font-weight:650;
+    line-height:1.6;
+    color:#59446c;
+    overflow-wrap:anywhere;
+  }
+  .work-card .card-footer {align-self:stretch;margin-top:auto}
+  .work-card .card-footer span:last-child {font-size:16px;line-height:1}
+  .detail-content {background:#fff;color:#30253d}
+  .detail-heading {grid-template-columns:minmax(0,1fr) auto auto;align-items:center;margin-bottom:22px}
+  .detail-heading .close-dialog {position:static;width:32px;height:32px;border-color:#eadbf2;background:#fcf8ff;box-shadow:none}
+  .detail-heading .close-dialog:hover {background:#f1e5fa}
+  .detail-heading h2 {color:#30203e;overflow-wrap:anywhere}
+  .detail-content h3 {color:#4b2c62;font-size:14px;font-weight:700;letter-spacing:0}
+  .detail-content .detail-description {color:#362c40;font-size:14px;line-height:1.8}
+  .detail-impact {
+    margin-top:20px;
+    padding:15px 17px;
+    border:1px solid #e9d9f3;
+    border-radius:14px;
+    background:#faf5ff;
+  }
+  .detail-analysis {display:grid;gap:12px;margin:0;color:#362c40;font-size:14px;line-height:1.75}
+  .detail-analysis > div {display:grid;grid-template-columns:4em minmax(0,1fr);gap:12px}
+  .detail-analysis dt {font-weight:700;color:#512d6e}
+  .detail-analysis dd {margin:0}
+  .detail-content .copy-button {color:#583675}
+  .close-dialog {color:#5d3a78}
+  .outfit-tabs {
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:7px;
+    max-width:610px;
+    padding:6px;
+    margin:0 0 16px;
+    border:1px solid #e7d5ef;
+    border-radius:18px;
+    background:linear-gradient(135deg,#fff9,#fdf5ffd9);
+    box-shadow:0 8px 28px #88559812;
+  }
+  .outfit-tabs .outfit-tab {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    min-height:49px;
+    padding:6px;
+    border-radius:12px;
+    color:#5e4773;
+    white-space:nowrap;
+  }
+  .outfit-tabs .outfit-tab:hover {background:#f5ecfa}
+  .outfit-tabs .outfit-tab[aria-selected=true] {
+    background:linear-gradient(115deg,#e9d7fa,#f9e3ee);
+    color:#4c286a;
+    border-color:#d8b9ed;
+    font-weight:700;
+  }
+  .outfit-tab-icon {display:grid;place-items:center;width:23px;height:23px;flex:none}
+  .outfit-tab-icon svg {width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .outfit-tabs .tab-count {padding:0;font-size:11px;background:none;color:inherit}
+  @media(max-width:460px) {
+    .outfit-tabs .outfit-tab {gap:4px;font-size:12px}
+    .outfit-tab-icon {width:17px;height:17px}
+    .detail-analysis > div {grid-template-columns:1fr;gap:2px}
+  }
 }

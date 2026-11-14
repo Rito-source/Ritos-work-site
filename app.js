@@ -5,13 +5,58 @@ const EMBEDDED_EVENTS = [{"id":1,"title":"Partner Up & WinCP组队冲榜","descr
 
 'use strict';
 
+const EVENT_IMPACT = {
+  1: ["把单人赠礼任务变成情侣共同目标，让两位成员都参与冲榜。", "双方的等级都计入同一个目标，任一方的进度都能帮助队伍达标。达标后两人各获 3,000 金豆，并可用成套头像框和海报展示搭档身份。"],
+  2: ["让家族成员围绕共同的许愿奖励合力开宝箱。", "每次开箱都能为家族排名贡献进度。进入前三的家族可以提出想回归的活动，家族成绩因此能影响下一次玩什么。"],
+  3: ["用粉、蓝阵营对战带动两款史莱姆礼物的首次尝试与重复赠送。", "参与者送出粉色或蓝色史莱姆时，同时也在为对应奖励阵营投票。选礼物这一步因此有了明确的偏好表达。"],
+  4: ["用 15 天限定座驾，把零散赠礼串成一个可累计的目标。", "每次赠礼都能累积到同一目标。达到 20,000 金币门槛即可获得 15 天蓝色史莱姆座驾，参与者可以按自己的节奏规划赠礼。"],
+  5: ["利用家族之间的竞争带来有效新用户。", "家族榜只计算有效邀请，参与者需要邀请真实的新用户。前三名家族分别获得 3、2、1 个为期 7 天的 VIP 名额。"],
+  6: ["让情侣共同受益，并用两档奖品鼓励主播延长开播。", "一位主播达标后，双方都能获得座位框。参与者可先拿到 7 天装扮，也可以继续挑战 1 个月装扮和展示位。"],
+  7: ["把两次 200 倍中奖与限定座驾挂钩，鼓励参与者再次赠礼。", "第一次触发 200 倍大奖后，参与者就有了清楚的下一步。累计两次即可解锁 15 天蓝色史莱姆座驾。"],
+  8: ["鼓励用户在站外发布舞蹈作品，扩大活动触达。", "参与者可以用自己的舞蹈视频加入活动，并把作品分享到社交平台。优秀作品有机会获得专属坐骑与 5,000 金币。"],
+  9: ["用每天重置的幸运榜，鼓励参与者连续回访。", "每日发放前三名奖励。错过当天名次的参与者，隔天还有新的机会争取座位框。"],
+  10: ["通过魅力榜前三名的分档奖励，带动参与者持续冲榜。", "每日全球魅力榜的前三名分别对应 200,000、150,000 和 100,000 金币奖励，参赛者可以直接看出不同名次对应的回报。"],
+  11: ["围绕家族排名，鼓励成员同时参与幸运礼物和游戏宝箱。", "喜欢幸运礼物和喜欢游戏的成员都能通过开箱贡献同一份家族成绩。进入前三的家族还可选出 20 名成员共享奖励。"],
+  12: ["用连续三天的日榜奖励，让参与者每天都有冲榜机会。", "三天内每天的榜首都有机会获得 50,000 金币和为期 7 天的座位框赠送权，冲榜的回报也能通过赠礼分享给别人。"],
+  13: ["引导佩戴「NEW」座位框的用户上麦并停留至少 10 分钟。", "把「NEW」座位框变成识别邀请对象的标志。10 分钟门槛把短暂上麦和真正留在麦位参与互动区分开。"],
+  14: ["让家族长带动更多成员参与史莱姆赠礼。", "成员送礼触发的合格中奖次数计入家族排名。前 3 名家族的家族长可选出 20 名成员共享金币奖励，同时获得专属头像框。"],
+  15: ["把奖励覆盖到每日前十名，给更多参与者争取名次的机会。", "每天参榜的玩家有 10 个获奖名次可争取。上榜者可以从四款星座座位框中选一款，奖励更贴合个人偏好。"],
+  16: ["让主播主动欢迎新进房观众，并用饼干礼物承接互动。", "一句招呼让新进房的观众有机会被主播注意到。观众可以用 5 金币饼干礼物回应，而榜单看的是送礼人数，鼓励和更多观众交流。"],
+  17: ["通过推荐奖励招募新人，并推动入选者完成首播。", "已有用户可以推荐熟悉的候选人，成功入选后推荐人和新主播都能获得金币，让个人推荐成为一个明确的招募入口。"],
+  18: ["把幸运礼物任务与向好友赠送装扮连起来。", "达标后，用户可以把限定座位框送给自己选的人。任务奖励因此有了具体的社交用途。"],
+  19: ["用限定星座座位框的赠送权，增加魅力榜榜首的吸引力。", "活动把榜首的魅力成绩转成一份可送给好友的礼物。第一名除 50,000 金币外，还能获得星座座位框赠送权。"],
+  20: ["让参与者围绕三天累计收益持续参与幸运礼物活动。", "三天的幸运礼物收益合并排名，某一天排名靠后的参与者仍可在后续两天继续积累。奖励范围覆盖总榜前 50 名。"],
+  21: ["用金币返还和专属座位框，让 VIP 权益更直观。", "开通 VIP 后，用户既能收到金币，也能获得可展示的专属座位框，订阅权益在日常使用中更容易感受到。"],
+  22: ["通过 Lv.3 与 Lv.4 两档奖励，鼓励参与者达标后继续完成任务。", "达到 Lv.3 就能从头像框和座位框中选一项赠送。愿意继续冲到 Lv.4 的参与者可解锁整套装扮赠送权与 3,000 金币。"],
+  23: ["用定制封面吸引主播完成开播任务，尤其是尝试首次开播的用户。", "主播完成 Lv.1 开播任务即可参加当天的抽选。每日 10 个名额提供了多次参与机会，抽中的主播可获得个人定制封面。"],
+  24: ["降低单个用户独自冲级的压力，让双人队伍合力达到 Lv.6。", "两位成员的任务等级可以互补，进度较快的一方能帮助队伍越过合计 Lv.6 的门槛。"],
+  25: ["用全球榜首奖励带动参与者冲榜与赠礼。", "全球榜首可从星座座位框中选一款使用 30 天，并获得 50,000 金币。限时装扮让榜首成绩在活动结束后仍可展示。"],
+  26: ["把双方互赠设为团队任务，鼓励情侣都参与。", "双方互赠的消耗累积到同一进度。达标后获得 7 天限定情侣座位框与 10,000 金币，把任务回报落到成套情侣装扮上。"],
+  27: ["以猫头鹰限定座驾激励持续参与幸运礼物活动。", "累计中奖达到 200,000 金币即可解锁奖励。达标玩家能获得 15 天猫头鹰限定座驾和 20,000 金币，把活动成果带回日常使用。"],
+  28: ["用首开奖励促进未开通过月 VIP 的用户完成首次订阅。", "首次开通月 VIP 的用户可以同时获得会员权益和 40,000 金币，开通当下就能拿到一份可用的奖励。"],
+  29: ["用连续三天达标的奖励，带动玩家第二天和第三天回到游戏。", "进度按天计算，首日达标后第二、第三天仍有明确的回访目标。连续完成三天的参与者可领取 30,000 金币。"],
+};
+
 const $ = (selector) => root.querySelector(selector);
 const PAGE_SIZE = 6;
 const state = { events: [], type: 'event', outfitType: 'frame', page: 1, query: '', series: 'all', sort: 'newest', activeEvent: null, returnFocus: null };
 const grid = $('#works-grid');
 const empty = $('#empty-state');
 const dialog = $('#detail-dialog');
-const galleryFilters = $('#gallery-filters');
+const galleryTools = $('#gallery-tools');
+const searchInput = $('#search');
+const galleryPanels = [
+  { button: $('#search-toggle'), panel: $('#gallery-search'), field: searchInput },
+  { button: $('#filter-toggle'), panel: $('#gallery-filters'), field: $('#series') },
+];
+
+function setGalleryPanel(openPanel = null) {
+  for (const { button, panel } of galleryPanels) {
+    const expanded = panel === openPanel;
+    button.setAttribute('aria-expanded', String(expanded));
+    panel.hidden = !expanded;
+  }
+}
 const types = {
   frame: { title: '头像框', en: 'AVATAR FRAMES', symbol: '◎' },
   seat: { title: '座位框', en: 'SEAT FRAMES', symbol: '▣' },
@@ -35,12 +80,12 @@ function showToast(message) {
 
 function buildCard(event) {
   const card = element('article', 'work-card');
-  const main = element('a', 'card-main');
-  main.href = event.url;
-  main.target = '_blank';
-  main.rel = 'noopener noreferrer';
-  main.setAttribute('aria-label', `打开${event.title}的网页（新窗口）`);
-  const imageBox = element('div', 'card-image');
+  const main = element('button', 'card-main');
+  main.type = 'button';
+  main.setAttribute('aria-label', `查看${event.title}的详情`);
+  main.setAttribute('aria-haspopup', 'dialog');
+  main.addEventListener('click', () => openDetail(event, main));
+  const imageBox = element('span', 'card-image');
   const image = element('img');
   image.src = event.image;
   image.alt = `${event.title} 活动横幅`;
@@ -49,28 +94,12 @@ function buildCard(event) {
   image.loading = 'lazy';
   image.decoding = 'async';
   imageBox.append(image);
-  const body = element('div', 'card-body');
-  const top = element('div', 'card-topline');
-  top.append(element('span', 'series-tag', event.series));
-  const title = element('h3', '', event.title);
-  const description = element('p', 'card-description', event.description.replace(/\n/g, ' '));
-  body.append(top, title, description);
-  main.append(imageBox, body);
-
-  const footer = element('div', 'card-footer');
-  const detail = element('button', 'detail-trigger', '查看作品详情');
-  detail.type = 'button';
-  detail.append(element('span', '', '→'));
-  detail.setAttribute('aria-label', `查看${event.title}的详情`);
-  detail.addEventListener('click', () => openDetail(event, detail));
-  const link = element('a', '', '原活动网页');
-  link.href = event.url;
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-  link.setAttribute('aria-label', `打开${event.title}的原活动网页（新窗口）`);
-  link.append(element('span', '', '↗'));
-  footer.append(detail, link);
-  card.append(main, footer);
+  const body = element('span', 'card-body');
+  body.append(element('span', 'card-title', event.title), element('span', 'series-tag', event.series));
+  const footer = element('span', 'card-footer');
+  footer.append(element('span', '', '查看作品详情'), element('span', '', '→'));
+  main.append(imageBox, body, footer);
+  card.append(main);
   return card;
 }
 
@@ -78,7 +107,7 @@ function render() {
   grid.replaceChildren();
   empty.replaceChildren();
   const isEvents = state.type === 'event';
-  galleryFilters.hidden = !isEvents;
+  galleryTools.hidden = !isEvents;
   $('#results-line').hidden = !isEvents;
   $('#outfit-content').hidden = isEvents;
   $('#pagination').hidden = true;
@@ -111,7 +140,8 @@ function render() {
       $('#search').value = '';
       $('#series').value = 'all';
       render();
-      $('#search').focus();
+      setGalleryPanel($('#gallery-search'));
+      searchInput.focus();
     });
     empty.append(reset);
   }
@@ -167,6 +197,7 @@ function selectOutfit(type) {
 
 function selectType(type) {
   state.type = type;
+  if (type !== 'event') setGalleryPanel();
   root.querySelectorAll('.type-tab').forEach(tab => {
     const selected = tab.dataset.type === type;
     tab.classList.toggle('active', selected);
@@ -183,9 +214,11 @@ function openDetail(event, trigger) {
   $('#detail-title').textContent = event.title;
   $('#detail-image').src = event.image;
   $('#detail-image').alt = `${event.title} 活动横幅`;
-  $('#detail-id').textContent = `作品 ${String(event.id).padStart(2, '0')} / ${state.events.length}`;
   $('#detail-series').textContent = event.series;
   $('#detail-description').textContent = event.description;
+  const [goal, effect] = EVENT_IMPACT[event.id];
+  $('#detail-goal').textContent = goal;
+  $('#detail-effect').textContent = effect;
   $('#detail-link').href = event.url;
   dialog.showModal();
   dialog.scrollTop = 0;
@@ -275,12 +308,34 @@ $('#search').addEventListener('input', event => { state.query = event.target.val
 $('#series').addEventListener('change', event => { state.series = event.target.value; state.page = 1; render(); });
 $('#sort').addEventListener('change', event => { state.sort = event.target.value; state.page = 1; render(); });
 
+for (const { button, panel, field } of galleryPanels) {
+  button.addEventListener('click', () => {
+    const expand = panel.hidden;
+    setGalleryPanel(expand ? panel : null);
+    if (expand) field.focus();
+  });
+}
+
+document.addEventListener('click', event => {
+  if (!galleryTools.contains(event.target) && galleryPanels.some(({ panel }) => !panel.hidden)) {
+    setGalleryPanel();
+  }
+});
+
 root.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !dialog.open && !outfitDialog.open) {
+    const current = galleryPanels.find(({ panel }) => !panel.hidden);
+    if (current) {
+      event.preventDefault();
+      setGalleryPanel();
+      current.button.focus();
+    }
+  }
   if (event.key === '/' && !dialog.open && !outfitDialog.open && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
     event.preventDefault();
     selectType('event');
-    galleryFilters.open = true;
-    $('#search').focus();
+    setGalleryPanel($('#gallery-search'));
+    searchInput.focus();
   }
 });
 
@@ -339,11 +394,10 @@ function syncOutfitCards() {
   }
 }
 
-async function decodeOutfitImage(image, row, motion = row.motion, isCurrent = () => true) {
+async function decodeOutfitImage(image, motion, fallback, isCurrent) {
   image.src = motion;
   try { await image.decode(); }
   catch (error) {
-    const fallback = motion !== row.motion ? row.motion : row.fallback;
     if (!fallback || !isCurrent()) throw error;
     image.src = fallback;
     await image.decode();
@@ -359,7 +413,9 @@ async function playOutfitCard(preview) {
   image.alt = '';
   preview.pending = image;
   try {
-    await decodeOutfitImage(image, row, row.cardMotion, () => request === preview.request);
+    const motion = row.cardMotionAvif || row.cardMotion;
+    const fallback = row.cardMotionAvif ? row.cardMotion : row.motion;
+    await decodeOutfitImage(image, motion, fallback, () => request === preview.request);
     if (request === preview.request) {
       preview.pending = null;
       media.replaceChildren(image);
@@ -412,7 +468,9 @@ function renderOutfits() {
     const card = element('article', 'outfit-card');
     const button = element('button', 'outfit-card-button');
     button.type = 'button';
-    button.setAttribute('aria-label', `预览${row.title}${row.kind === 'still' ? '' : '动效'}`);
+    button.setAttribute('aria-label', category === 'ride'
+      ? `播放 ${row.title}`
+      : `预览${row.title}${row.kind === 'still' ? '' : '动效'}`);
     const media = element('span', 'outfit-thumb');
     media.classList.toggle('is-avatar', category === 'frame');
     media.classList.toggle('is-ride', category === 'ride');
@@ -423,6 +481,11 @@ function renderOutfits() {
     image.alt = '';
     const title = element('span', 'outfit-card-copy', row.title);
     media.append(image);
+    if (category === 'ride') {
+      const playIcon = element('span', 'outfit-play-icon');
+      playIcon.setAttribute('aria-hidden', 'true');
+      media.append(playIcon);
+    }
     button.append(media, title);
     button.addEventListener('click', () => {
       const preview = outfitCards.get(card);
@@ -433,7 +496,9 @@ function renderOutfits() {
     });
     card.append(button);
     cards.append(card);
-    if (row.kind !== 'still') outfitCards.set(card, { row, media, poster: image, visible: !outfitObserver, playing: false, request: 0 });
+    if (category !== 'ride' && row.kind !== 'still') {
+      outfitCards.set(card, { row, media, poster: image, visible: !outfitObserver, playing: false, request: 0 });
+    }
   }
   outfitGallery.append(cards);
   for (const card of outfitCards.keys()) outfitObserver?.observe(card);
@@ -496,7 +561,7 @@ async function playOutfitPreview(row, animation) {
   const isCurrent = () => request === outfitRequest;
   try {
     const image = outfitPoster(row);
-    await decodeOutfitImage(image, row, row.motion, isCurrent);
+    await decodeOutfitImage(image, row.motion, row.fallback, isCurrent);
     if (isCurrent()) outfitStage.replaceChildren(image);
   } catch {
     if (!isCurrent()) return;

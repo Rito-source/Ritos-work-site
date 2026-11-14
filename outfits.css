@@ -14,6 +14,30 @@
   .outfit-thumb.is-avatar,.outfit-thumb.is-ride{aspect-ratio:1}
   .outfit-thumb.is-portrait-ride{aspect-ratio:3/4}
   .outfit-thumb img,.outfit-thumb video{position:absolute;inset:var(--thumb-inset);width:calc(100% - 2 * var(--thumb-inset));height:calc(100% - 2 * var(--thumb-inset));object-fit:contain;pointer-events:none}
+  .outfit-play-icon {
+    position:absolute;
+    right:10px;
+    bottom:10px;
+    display:grid;
+    place-items:center;
+    width:44px;
+    height:44px;
+    border:1px solid #fff9;
+    border-radius:50%;
+    background:#553477;
+    color:#fff;
+    box-shadow:0 3px 12px #37264c40;
+  }
+  .outfit-play-icon::before {
+    content:'';
+    width:14px;
+    height:16px;
+    margin-left:3px;
+    background:currentColor;
+    clip-path:polygon(0 0,100% 50%,0 100%);
+  }
+  .outfit-card-button:hover .outfit-play-icon,
+  .outfit-card-button:focus-visible .outfit-play-icon {background:#70449b}
   .outfit-card-copy{display:block;min-height:53px;padding:16px 14px;text-align:center;font-size:13px;font-weight:600;overflow-wrap:anywhere;background:#ede1f95c}
   #outfit-dialog{background:transparent;border-color:#f1e5ff8c}
   #outfit-dialog::backdrop{background:#55406370}
@@ -33,6 +57,14 @@
 }
 
 #mimoon-collection-preview {
-  .outfit-group-switch button {background:transparent;border-color:transparent}
-  .outfit-group-switch button[aria-pressed=true] {background:#eee2f7;border-color:#dfcdec}
+  .outfit-group-switch {gap:6px}
+  .outfit-group-switch button {
+    background:#fffb;
+    border-color:#e4d4f0;
+    border-radius:999px;
+    padding-inline:12px;
+    color:#5e4275;
+  }
+  .outfit-group-switch button:hover {background:#f4ebfa}
+  .outfit-group-switch button[aria-pressed=true] {background:#eadbf8;border-color:#cda9e8;color:#492661;font-weight:650}
 }

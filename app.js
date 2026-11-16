@@ -333,9 +333,9 @@ let outfitPage = 1;
 let outfitGroup = '';
 let outfitTrigger = null;
 let outfitRequest = 0;
-let outfitAudioContext;
-let outfitAudioRequest;
-let outfitAudioSource;
+let activeOutfit = null;
+const outfitAudio = new Audio();
+outfitAudio.loop = true;
 
 function renderOutfits() {
   const category = state.outfitType;
@@ -431,11 +431,13 @@ function outfitPoster(row) {
 
 function openOutfitPreview(row, trigger) {
   outfitTrigger = trigger;
+  activeOutfit = row;
   outfitStage.classList.toggle('is-avatar', row.category === 'frame');
   outfitStage.classList.toggle('is-ride', row.category === 'ride');
   outfitStage.classList.toggle('is-portrait-ride', row.category === 'ride' && row.group === '3:4');
   $('#outfit-preview-title').textContent = row.title;
-  outfitStage.replaceChildren(outfitPoster(row));
+  outfitStage.disabled = !row.motion;
+  if (!row.motion) outfitStage.replaceChildren(outfitPoster(row));
   outfitPNG.src = row.cover;
   outfitPNG.alt = `${row.title}的透明缩略图`;
   outfitStatus.hidden = true;
@@ -447,32 +449,23 @@ function openOutfitPreview(row, trigger) {
 async function playOutfitPreview(row) {
   const request = ++outfitRequest;
   const isCurrent = () => request === outfitRequest && outfitDialog.open;
+  outfitStage.replaceChildren(outfitPoster(row));
   outfitStatus.textContent = '正在载入动效…';
   outfitStatus.hidden = false;
-  const soundPromise = loadOutfitSound(row.audio);
+  // Start native audio during the tap so iOS can grant playback permission.
+  const sound = row.audio ? playOutfitSound(row.audio.file) : null;
   try {
     const image = await loadOutfitMotion(row);
     if (!isCurrent()) return;
     outfitStage.replaceChildren(image);
     outfitStatus.hidden = true;
-    const startedAt = performance.now();
-    const sound = await soundPromise;
-    if (!isCurrent()) return;
-    if (sound && outfitAudioContext.state === 'running') {
-      const duration = Math.min(row.audio.durationMs / 1000, sound.duration);
-      outfitAudioSource = outfitAudioContext.createBufferSource();
-      outfitAudioSource.buffer = sound;
-      outfitAudioSource.loop = true;
-      outfitAudioSource.loopEnd = duration;
-      outfitAudioSource.connect(outfitAudioContext.destination);
-      outfitAudioSource.start(0, ((performance.now() - startedAt) / 1000) % duration);
-    } else if (row.audio) {
-      outfitStatus.textContent = '声音暂时无法播放。';
+    if (sound && !(await sound) && isCurrent()) {
+      outfitStatus.textContent = '点一下动效画面，重试声音。';
       outfitStatus.hidden = false;
     }
   } catch {
     if (!isCurrent()) return;
-    outfitAudioRequest?.abort();
+    outfitAudio.pause();
     outfitStatus.textContent = '此浏览器暂时无法播放动效，可以查看静态预览。';
     outfitStatus.hidden = false;
   }
@@ -489,31 +482,27 @@ function loadOutfitMotion(row) {
   });
 }
 
-async function loadOutfitSound(audio) {
-  if (!audio) return null;
+async function playOutfitSound(file) {
   try {
-    outfitAudioContext ??= new AudioContext();
-    outfitAudioRequest = new AbortController();
-    // Resume in the tap handler, but don't let mobile audio policy delay the image.
-    void outfitAudioContext.resume().catch(() => {});
-    const response = await fetch(audio.file, { signal: outfitAudioRequest.signal });
-    if (!response.ok) return null;
-    return await outfitAudioContext.decodeAudioData(await response.arrayBuffer());
+    if (outfitAudio.error || outfitAudio.getAttribute('src') !== file) outfitAudio.src = file;
+    else outfitAudio.currentTime = 0;
+    await outfitAudio.play();
+    return true;
   } catch {
-    return null;
+    return false;
   }
 }
 
+outfitStage.addEventListener('click', () => {
+  if (activeOutfit?.motion) void playOutfitPreview(activeOutfit);
+});
 $('#close-outfit-preview').addEventListener('click', () => outfitDialog.close());
 outfitDialog.addEventListener('close', () => {
   outfitRequest++;
-  outfitAudioRequest?.abort();
-  outfitAudioRequest = null;
-  if (outfitAudioSource) {
-    outfitAudioSource.stop();
-    outfitAudioSource.disconnect();
-    outfitAudioSource = null;
-  }
+  activeOutfit = null;
+  outfitAudio.pause();
+  outfitAudio.removeAttribute('src');
+  outfitAudio.load();
   outfitStage.replaceChildren();
   outfitPNG.removeAttribute('src');
   outfitTrigger?.focus({ preventScroll: true });

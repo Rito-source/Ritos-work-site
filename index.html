@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="RIto 的网页与虚拟装扮作品集。">
   <title>RIto‘s Work</title>
-  <link rel="stylesheet" href="styles.css?v=outfit-select">
-  <link rel="stylesheet" href="outfits.css?v=ride-pagination">
+  <link rel="stylesheet" href="styles.css?v=outfit-replay">
+  <link rel="stylesheet" href="outfits.css?v=outfit-replay">
   <script defer src="outfits-data.js?v=quick-preview"></script>
-  <script defer src="app.js?v=outfit-heading"></script>
+  <script defer src="app.js?v=outfit-replay"></script>
 </head>
 <body>
 <div id="mimoon-collection-preview">
@@ -103,7 +103,7 @@
   <dialog id="outfit-dialog" aria-labelledby="outfit-preview-title">
     <div class="outfit-preview-body">
       <button class="close-dialog" type="button" id="close-outfit-preview" aria-label="关闭动效预览">✕</button>
-      <div class="outfit-preview-stage" id="outfit-preview-stage"></div>
+      <button class="outfit-preview-stage" id="outfit-preview-stage" type="button" aria-label="从头播放动效"></button>
       <div class="outfit-preview-info">
         <h2 class="sr-only" id="outfit-preview-title"></h2>
         <figure class="outfit-preview-thumbnail">

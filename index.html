@@ -6,9 +6,9 @@
   <meta name="description" content="RIto 的网页与虚拟装扮作品集。">
   <title>RIto‘s Work</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="outfits.css?v=outfit-layout">
-  <script defer src="outfits-data.js?v=outfit-sound"></script>
-  <script defer src="app.js?v=outfit-sound"></script>
+  <link rel="stylesheet" href="outfits.css?v=quick-preview">
+  <script defer src="outfits-data.js?v=quick-preview"></script>
+  <script defer src="app.js?v=quick-preview"></script>
 </head>
 <body>
 <div id="mimoon-collection-preview">
@@ -95,10 +95,11 @@
     <div class="outfit-preview-body">
       <button class="close-dialog" type="button" id="close-outfit-preview" aria-label="关闭动效预览">✕</button>
       <div class="outfit-preview-stage" id="outfit-preview-stage"></div>
-      <div class="outfit-preview-info"><p class="eyebrow" id="outfit-preview-category"></p><h2 id="outfit-preview-title"></h2>
+      <div class="outfit-preview-info">
+        <h2 class="sr-only" id="outfit-preview-title"></h2>
         <figure class="outfit-preview-thumbnail">
-          <img id="outfit-preview-png" alt="">
-          <figcaption>PNG 缩略图</figcaption>
+          <img id="outfit-preview-png" alt="" fetchpriority="low">
+          <figcaption>略缩图</figcaption>
         </figure>
         <p class="frame-status" id="outfit-preview-status" role="status" hidden></p>
       </div>

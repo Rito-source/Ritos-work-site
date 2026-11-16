@@ -427,6 +427,7 @@ function renderOutfits() {
   outfitGallery.append(cards);
   if (pages <= 1) return;
   const pagination = element('nav', 'pagination');
+  if (category === 'ride') pagination.classList.add('ride-pagination');
   pagination.setAttribute('aria-label', `${types[category].title}分页`);
   const button = (label, page, disabled, active = false) => {
     const b = element('button', 'page-button', label);
@@ -437,7 +438,9 @@ function renderOutfits() {
       if (page === outfitPage) return;
       outfitPage = page;
       renderOutfits();
-      outfitGallery.scrollIntoView({ block: 'start', behavior: reduceMotion() ? 'instant' : 'smooth' });
+      if (category !== 'ride') {
+        outfitGallery.scrollIntoView({ block: 'start', behavior: reduceMotion() ? 'instant' : 'smooth' });
+      }
       outfitGallery.querySelector('[aria-current="page"]').focus({ preventScroll: true });
     });
     return b;
@@ -445,7 +448,8 @@ function renderOutfits() {
   const numbers = element('div', 'page-numbers');
   for (let p = 1; p <= pages; p++) numbers.append(button(String(p), p, false, p === outfitPage));
   pagination.append(button('上一页', outfitPage - 1, outfitPage === 1), numbers, button('下一页', outfitPage + 1, outfitPage === pages));
-  outfitGallery.append(pagination);
+  if (category === 'ride') cards.before(pagination);
+  else outfitGallery.append(pagination);
 }
 
 function outfitPoster(row) {
@@ -463,7 +467,6 @@ function openOutfitPreview(row, trigger) {
   outfitStage.classList.toggle('is-ride', row.category === 'ride');
   outfitStage.classList.toggle('is-portrait-ride', row.category === 'ride' && row.group === '3:4');
   $('#outfit-preview-title').textContent = row.title;
-  $('#outfit-preview-category').textContent = [types[row.category].title, row.group, row.format].filter(Boolean).join(' · ');
   outfitStage.replaceChildren(outfitPoster(row));
   outfitPNG.src = row.png;
   outfitPNG.alt = `${row.title}的透明缩略图`;
@@ -476,33 +479,46 @@ function openOutfitPreview(row, trigger) {
 async function playOutfitPreview(row) {
   const request = ++outfitRequest;
   const isCurrent = () => request === outfitRequest && outfitDialog.open;
-  outfitStatus.textContent = '正在载入高清动效…';
+  outfitStatus.textContent = '正在载入动效…';
   outfitStatus.hidden = false;
+  const soundPromise = loadOutfitSound(row.audio);
   try {
-    const image = element('img');
-    image.alt = row.title;
-    image.src = row.motion;
-    const [sound] = await Promise.all([loadOutfitSound(row.audio), image.decode()]);
-    if (isCurrent()) {
-      outfitStage.replaceChildren(image);
-      outfitStatus.hidden = true;
-      if (sound) {
-        outfitAudioSource = outfitAudioContext.createBufferSource();
-        outfitAudioSource.buffer = sound;
-        outfitAudioSource.loop = true;
-        outfitAudioSource.loopEnd = row.audio.durationMs / 1000;
-        outfitAudioSource.connect(outfitAudioContext.destination);
-        outfitAudioSource.start();
-      } else if (row.audio) {
-        outfitStatus.textContent = '声音暂时无法播放。';
-        outfitStatus.hidden = false;
-      }
+    const image = await loadOutfitMotion(row);
+    if (!isCurrent()) return;
+    outfitStage.replaceChildren(image);
+    outfitStatus.hidden = true;
+    const startedAt = performance.now();
+    const sound = await soundPromise;
+    if (!isCurrent()) return;
+    if (sound && outfitAudioContext.state === 'running') {
+      const duration = Math.min(row.audio.durationMs / 1000, sound.duration);
+      outfitAudioSource = outfitAudioContext.createBufferSource();
+      outfitAudioSource.buffer = sound;
+      outfitAudioSource.loop = true;
+      outfitAudioSource.loopEnd = duration;
+      outfitAudioSource.connect(outfitAudioContext.destination);
+      outfitAudioSource.start(0, ((performance.now() - startedAt) / 1000) % duration);
+    } else if (row.audio) {
+      outfitStatus.textContent = '声音暂时无法播放。';
+      outfitStatus.hidden = false;
     }
   } catch {
     if (!isCurrent()) return;
+    outfitAudioRequest?.abort();
     outfitStatus.textContent = '此浏览器暂时无法播放动效，可以查看静态预览。';
     outfitStatus.hidden = false;
   }
+}
+
+function loadOutfitMotion(row) {
+  return new Promise((resolve, reject) => {
+    const image = element('img');
+    image.alt = row.title;
+    image.fetchPriority = 'high';
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = row.motion;
+  });
 }
 
 async function loadOutfitSound(audio) {
@@ -510,10 +526,9 @@ async function loadOutfitSound(audio) {
   try {
     outfitAudioContext ??= new AudioContext();
     outfitAudioRequest = new AbortController();
-    const [, response] = await Promise.all([
-      outfitAudioContext.resume(),
-      fetch(audio.file, { signal: outfitAudioRequest.signal }),
-    ]);
+    // Resume in the tap handler, but don't let mobile audio policy delay the image.
+    void outfitAudioContext.resume().catch(() => {});
+    const response = await fetch(audio.file, { signal: outfitAudioRequest.signal });
     if (!response.ok) return null;
     return await outfitAudioContext.decodeAudioData(await response.arrayBuffer());
   } catch {

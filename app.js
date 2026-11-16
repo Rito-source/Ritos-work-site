@@ -334,6 +334,7 @@ let outfitGroup = '';
 let outfitTrigger = null;
 let outfitRequest = 0;
 let activeOutfit = null;
+let stopRidePreview = null;
 const outfitAudio = new Audio();
 outfitAudio.loop = true;
 
@@ -447,11 +448,17 @@ function openOutfitPreview(row, trigger) {
 }
 
 async function playOutfitPreview(row) {
+  stopRidePreview?.();
+  stopRidePreview = null;
   const request = ++outfitRequest;
   const isCurrent = () => request === outfitRequest && outfitDialog.open;
   outfitStage.replaceChildren(outfitPoster(row));
   outfitStatus.textContent = '正在载入动效…';
   outfitStatus.hidden = false;
+  if (row.syncedVideo) {
+    stopRidePreview = playSyncedRide(row.syncedVideo, isCurrent);
+    return;
+  }
   // Start native audio during the tap so iOS can grant playback permission.
   const sound = row.audio ? playOutfitSound(row.audio.file) : null;
   try {
@@ -469,6 +476,81 @@ async function playOutfitPreview(row) {
     outfitStatus.textContent = '此浏览器暂时无法播放动效，可以查看静态预览。';
     outfitStatus.hidden = false;
   }
+}
+
+function playSyncedRide(source, isCurrent) {
+  const video = element('video', 'sr-only');
+  video.setAttribute('aria-hidden', 'true');
+  video.playsInline = true;
+  video.loop = true;
+  outfitStage.append(video);
+
+  // The left half holds color and the right half holds the alpha mask.
+  // Both halves and the audio share the same video timeline.
+  const canvas = element('canvas');
+  const output = canvas.getContext('2d');
+  const packed = element('canvas');
+  const input = packed.getContext('2d', { willReadFrequently: true });
+  const usesVideoFrames = typeof video.requestVideoFrameCallback === 'function';
+  let frameRequest;
+  let lastTime = -1;
+  let transparentFrame;
+
+  function renderFrame() {
+    if (!isCurrent()) return;
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && video.currentTime !== lastTime) {
+      lastTime = video.currentTime;
+      const width = video.videoWidth / 2;
+      const height = video.videoHeight;
+      if (!transparentFrame) {
+        canvas.width = width;
+        canvas.height = height;
+        packed.width = width * 2;
+        packed.height = height;
+        transparentFrame = output.createImageData(width, height);
+      }
+      input.drawImage(video, 0, 0);
+      const pixels = input.getImageData(0, 0, width * 2, height).data;
+      const rgba = transparentFrame.data;
+      const rowBytes = width * 4;
+      for (let y = 0; y < height; y++) {
+        const colorStart = y * rowBytes * 2;
+        const alphaStart = colorStart + rowBytes;
+        const targetStart = y * rowBytes;
+        rgba.set(pixels.subarray(colorStart, alphaStart), targetStart);
+        for (let offset = 0; offset < rowBytes; offset += 4) {
+          const alpha = pixels[alphaStart + offset];
+          rgba[targetStart + offset + 3] = alpha < 4 ? 0 : alpha > 251 ? 255 : alpha;
+        }
+      }
+      output.putImageData(transparentFrame, 0, 0);
+      if (!canvas.isConnected) {
+        outfitStage.firstElementChild.replaceWith(canvas);
+        outfitStatus.hidden = true;
+      }
+    }
+    frameRequest = usesVideoFrames
+      ? video.requestVideoFrameCallback(renderFrame)
+      : requestAnimationFrame(renderFrame);
+  }
+
+  function showFailure() {
+    if (!isCurrent()) return;
+    outfitStatus.textContent = '动效暂时无法播放，点画面重试。';
+    outfitStatus.hidden = false;
+  }
+
+  video.addEventListener('error', showFailure);
+  video.src = source;
+  video.play().catch(showFailure);
+  renderFrame();
+  return () => {
+    if (usesVideoFrames) video.cancelVideoFrameCallback(frameRequest);
+    else cancelAnimationFrame(frameRequest);
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+  };
 }
 
 function loadOutfitMotion(row) {
@@ -500,6 +582,8 @@ $('#close-outfit-preview').addEventListener('click', () => outfitDialog.close())
 outfitDialog.addEventListener('close', () => {
   outfitRequest++;
   activeOutfit = null;
+  stopRidePreview?.();
+  stopRidePreview = null;
   outfitAudio.pause();
   outfitAudio.removeAttribute('src');
   outfitAudio.load();

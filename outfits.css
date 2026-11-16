@@ -52,6 +52,8 @@
   .outfit-preview-stage:is(.is-avatar,.is-ride){width:min(100%,var(--outfit-stage-height));height:auto;aspect-ratio:1;place-self:center}
   .outfit-preview-stage.is-portrait-ride{width:min(100%,var(--outfit-stage-height) * .75);aspect-ratio:3/4}
   .outfit-preview-stage img,.outfit-preview-stage video{display:block;width:100%;height:100%;min-height:0;min-width:0;object-fit:contain}
+  .outfit-preview-stage canvas{display:block;width:100%;height:100%;min-height:0;min-width:0;object-fit:contain}
+  .outfit-preview-stage video.sr-only{width:1px;height:1px}
   .outfit-preview-stage .outfit-source{display:block;width:100%;height:100%;min-width:0;min-height:0;overflow:hidden}
   .outfit-preview-stage > canvas.outfit-source{object-fit:contain}
   .outfit-preview-info{display:flex;flex-direction:column;justify-content:center;padding:44px 23px 25px;min-width:0;text-align:center;background:#eee2f7}

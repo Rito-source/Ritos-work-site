@@ -489,7 +489,8 @@ window.MIMOON_OUTFITS = [
     "audio": {
       "file": "assets/outfits/ride-01-sound.mp3",
       "durationMs": 10067
-    }
+    },
+    "syncedVideo": "assets/outfits/ride-01-synced.mp4"
   },
   {
     "id": "ride-02",
@@ -506,7 +507,8 @@ window.MIMOON_OUTFITS = [
     "audio": {
       "file": "assets/outfits/ride-02-sound.mp3",
       "durationMs": 8067
-    }
+    },
+    "syncedVideo": "assets/outfits/ride-02-synced.mp4"
   },
   {
     "id": "ride-03",
@@ -523,7 +525,8 @@ window.MIMOON_OUTFITS = [
     "audio": {
       "file": "assets/outfits/ride-03-sound.mp3",
       "durationMs": 8133
-    }
+    },
+    "syncedVideo": "assets/outfits/ride-03-synced.mp4"
   },
   {
     "id": "ride-04",
@@ -540,7 +543,8 @@ window.MIMOON_OUTFITS = [
     "audio": {
       "file": "assets/outfits/ride-04-sound.mp3",
       "durationMs": 6067
-    }
+    },
+    "syncedVideo": "assets/outfits/ride-04-synced.mp4"
   },
   {
     "id": "ride-05",
@@ -557,7 +561,8 @@ window.MIMOON_OUTFITS = [
     "audio": {
       "file": "assets/outfits/ride-05-sound.mp3",
       "durationMs": 6067
-    }
+    },
+    "syncedVideo": "assets/outfits/ride-05-synced.mp4"
   },
   {
     "id": "ride-06",
@@ -574,7 +579,8 @@ window.MIMOON_OUTFITS = [
     "audio": {
       "file": "assets/outfits/ride-06-sound.mp3",
       "durationMs": 6333
-    }
+    },
+    "syncedVideo": "assets/outfits/ride-06-synced.mp4"
   },
   {
     "id": "ride-07",
@@ -591,7 +597,8 @@ window.MIMOON_OUTFITS = [
     "audio": {
       "file": "assets/outfits/ride-07-sound.mp3",
       "durationMs": 6067
-    }
+    },
+    "syncedVideo": "assets/outfits/ride-07-synced.mp4"
   },
   {
     "id": "ride-08",
@@ -608,7 +615,8 @@ window.MIMOON_OUTFITS = [
     "audio": {
       "file": "assets/outfits/ride-08-sound.mp3",
       "durationMs": 6067
-    }
+    },
+    "syncedVideo": "assets/outfits/ride-08-synced.mp4"
   },
   {
     "id": "ride-09",
@@ -625,7 +633,8 @@ window.MIMOON_OUTFITS = [
     "audio": {
       "file": "assets/outfits/ride-09-sound.mp3",
       "durationMs": 7067
-    }
+    },
+    "syncedVideo": "assets/outfits/ride-09-synced.mp4"
   },
   {
     "id": "ride-10",
@@ -642,7 +651,8 @@ window.MIMOON_OUTFITS = [
     "audio": {
       "file": "assets/outfits/ride-10-sound.mp3",
       "durationMs": 10067
-    }
+    },
+    "syncedVideo": "assets/outfits/ride-10-synced.mp4"
   },
   {
     "id": "ride-11",
@@ -659,6 +669,7 @@ window.MIMOON_OUTFITS = [
     "audio": {
       "file": "assets/outfits/ride-11-sound.mp3",
       "durationMs": 5267
-    }
+    },
+    "syncedVideo": "assets/outfits/ride-11-synced.mp4"
   }
 ];

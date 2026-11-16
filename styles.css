@@ -241,7 +241,7 @@ body{margin:0}
   .detail-actions {justify-content:center}
   #detail-dialog .close-dialog,#outfit-dialog .close-dialog {width:40px;height:40px;right:5px;top:5px;border:0;border-radius:0;background:transparent;box-shadow:none;color:#fff;text-shadow:0 1px 4px #161020,0 0 2px #161020;font-size:23px}
   #detail-dialog .close-dialog:focus,#outfit-dialog .close-dialog:focus {outline:none}
-  #detail-dialog .close-dialog:focus-visible,#outfit-dialog .close-dialog:focus-visible {text-decoration:underline;text-underline-offset:5px}
+  #detail-dialog .close-dialog:focus-visible,#outfit-dialog .close-dialog:focus-visible {color:#ffe0a8;font-weight:700}
   @media(max-width:680px) {
     .detail-heading h2 {padding:0}
     .detail-heading .series-tag {position:static;display:table;transform:none;margin:8px 0 0 auto}

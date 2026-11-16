@@ -47,7 +47,7 @@ const galleryTools = $('#gallery-tools');
 const searchInput = $('#search');
 const galleryPanels = [
   { button: $('#search-toggle'), panel: $('#gallery-search'), field: searchInput },
-  { button: $('#filter-toggle'), panel: $('#gallery-filters'), field: $('#series') },
+  { button: $('#filter-toggle'), panel: $('#gallery-filters'), field: $('#sort') },
 ];
 
 function setGalleryPanel(openPanel = null) {
@@ -87,6 +87,8 @@ function buildCard(event) {
   main.addEventListener('click', () => openDetail(event, main));
   const imageBox = element('span', 'card-image');
   const image = element('img');
+  image.srcset = `${event.image.replace(".webp", "-small.webp")} 720w, ${event.image.replace(".webp", "-medium.webp")} 1200w, ${event.image} 1470w`;
+  image.sizes = "(max-width: 680px) calc(100vw - 48px), (max-width: 1180px) calc(50vw - 68px), 540px";
   image.src = event.image;
   image.alt = `${event.title} 活动横幅`;
   image.width = 1044;
@@ -108,6 +110,7 @@ function render() {
   empty.replaceChildren();
   const isEvents = state.type === 'event';
   galleryTools.hidden = !isEvents;
+  $('#outfit-series-control').hidden = isEvents;
   $('#results-line').hidden = !isEvents;
   $('#outfit-content').hidden = isEvents;
   $('#pagination').hidden = true;
@@ -155,11 +158,12 @@ function renderPagination(pageCount) {
   pagination.replaceChildren();
   pagination.hidden = pageCount <= 1;
   if (pageCount <= 1) return;
-  const button = (label, page, disabled = false, accessibleLabel = label) => {
-    const node = element('button', 'page-button', label);
+  const pages = element('div', 'page-numbers');
+  for (let page = 1; page <= pageCount; page++) {
+    const node = element('button', 'page-button', String(page));
     node.type = 'button';
-    node.disabled = disabled;
-    node.setAttribute('aria-label', accessibleLabel);
+    node.setAttribute('aria-label', `第 ${page} 页`);
+    if (page === state.page) node.setAttribute('aria-current', 'page');
     node.addEventListener('click', () => {
       if (page === state.page) return;
       state.page = page;
@@ -167,15 +171,9 @@ function renderPagination(pageCount) {
       $('#collection').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
       $('#pagination [aria-current="page"]').focus({ preventScroll: true });
     });
-    return node;
-  };
-  const pages = element('div', 'page-numbers');
-  for (let page = 1; page <= pageCount; page++) {
-    const node = button(String(page), page, false, `第 ${page} 页`);
-    if (page === state.page) node.setAttribute('aria-current', 'page');
     pages.append(node);
   }
-  pagination.append(button('上一页', state.page - 1, state.page === 1), pages, button('下一页', state.page + 1, state.page === pageCount), element('span', 'page-summary', `第 ${state.page} / ${pageCount} 页`));
+  pagination.append(pages);
 }
 
 function selectOutfit(type) {
@@ -184,13 +182,6 @@ function selectOutfit(type) {
     outfitGroup = OUTFIT_GROUPS[type]?.[0] ?? '';
   }
   state.outfitType = type;
-  root.querySelectorAll('.outfit-tab').forEach(tab => {
-    const selected = tab.dataset.outfit === type;
-    tab.classList.toggle('active', selected);
-    tab.setAttribute('aria-selected', String(selected));
-    tab.tabIndex = selected ? 0 : -1;
-  });
-  $('#outfit-panel').setAttribute('aria-labelledby', `outfit-tab-${type}`);
   render();
 }
 
@@ -211,6 +202,8 @@ function openDetail(event, trigger) {
   state.activeEvent = event;
   state.returnFocus = trigger;
   $('#detail-title').textContent = event.title;
+  $('#detail-image').srcset = `${event.image.replace('.webp', '-small.webp')} 720w, ${event.image.replace(".webp", "-medium.webp")} 1200w, ${event.image} 1470w`;
+  $('#detail-image').sizes = '(max-width: 680px) calc(100vw - 24px), 840px';
   $('#detail-image').src = event.image;
   $('#detail-image').alt = `${event.title} 活动横幅`;
   $('#detail-series').textContent = event.series;
@@ -288,21 +281,7 @@ root.querySelectorAll('.type-tab').forEach(tab => {
     tabs[index].focus();
   });
 });
-root.querySelectorAll('.outfit-tab').forEach(tab => {
-  tab.addEventListener('click', () => selectOutfit(tab.dataset.outfit));
-  tab.addEventListener('keydown', event => {
-    const tabs = [...root.querySelectorAll('.outfit-tab')];
-    let index = tabs.indexOf(tab);
-    if (event.key === 'ArrowRight') index = (index + 1) % tabs.length;
-    else if (event.key === 'ArrowLeft') index = (index - 1 + tabs.length) % tabs.length;
-    else if (event.key === 'Home') index = 0;
-    else if (event.key === 'End') index = tabs.length - 1;
-    else return;
-    event.preventDefault();
-    selectOutfit(tabs[index].dataset.outfit);
-    tabs[index].focus();
-  });
-});
+$('#outfit-category').addEventListener('change', event => selectOutfit(event.target.value));
 $('#search').addEventListener('input', event => { state.query = event.target.value.trim(); state.page = 1; render(); });
 $('#series').addEventListener('change', event => { state.series = event.target.value; state.page = 1; render(); });
 $('#sort').addEventListener('change', event => { state.sort = event.target.value; state.page = 1; render(); });
@@ -350,12 +329,6 @@ const OUTFIT_GROUPS = {
   seat: ['猫头鹰', '十二星座', '史莱姆', '其他'],
 };
 const RIDE_PAGES = ['3:4', '1:1', '透明抠图'];
-const outfitTotal = outfitRows.length;
-$('#outfit-total').textContent = outfitTotal;
-for (const tab of root.querySelectorAll('.outfit-tab')) {
-  const count = outfitRows.filter(row => row.category === tab.dataset.outfit).length;
-  tab.append(element('span', 'tab-count', String(count)));
-}
 let outfitPage = 1;
 let outfitGroup = '';
 let outfitTrigger = null;
@@ -375,7 +348,7 @@ function renderOutfits() {
     ? rows.filter(row => row.group === RIDE_PAGES[outfitPage - 1])
     : rows.slice((outfitPage - 1) * PAGE_SIZE, outfitPage * PAGE_SIZE);
   const heading = element('div', 'outfit-gallery-heading');
-  heading.append(element('h3', '', outfitGroup || types[category].title));
+  heading.append(element('h3', '', types[category].title));
   heading.append(element('p', '', `共 ${rows.length} 件`));
   outfitGallery.replaceChildren(heading);
   if (OUTFIT_GROUPS[category]) {
@@ -427,29 +400,24 @@ function renderOutfits() {
   outfitGallery.append(cards);
   if (pages <= 1) return;
   const pagination = element('nav', 'pagination');
-  if (category === 'ride') pagination.classList.add('ride-pagination');
   pagination.setAttribute('aria-label', `${types[category].title}分页`);
-  const button = (label, page, disabled, active = false) => {
-    const b = element('button', 'page-button', label);
+  const numbers = element('div', 'page-numbers');
+  for (let page = 1; page <= pages; page++) {
+    const b = element('button', 'page-button', String(page));
     b.type = 'button';
-    b.disabled = disabled;
-    if (active) b.setAttribute('aria-current', 'page');
+    b.setAttribute('aria-label', `第 ${page} 页`);
+    if (page === outfitPage) b.setAttribute('aria-current', 'page');
     b.addEventListener('click', () => {
       if (page === outfitPage) return;
       outfitPage = page;
       renderOutfits();
-      if (category !== 'ride') {
-        outfitGallery.scrollIntoView({ block: 'start', behavior: reduceMotion() ? 'instant' : 'smooth' });
-      }
+      outfitGallery.scrollIntoView({ block: 'start', behavior: reduceMotion() ? 'instant' : 'smooth' });
       outfitGallery.querySelector('[aria-current="page"]').focus({ preventScroll: true });
     });
-    return b;
-  };
-  const numbers = element('div', 'page-numbers');
-  for (let p = 1; p <= pages; p++) numbers.append(button(String(p), p, false, p === outfitPage));
-  pagination.append(button('上一页', outfitPage - 1, outfitPage === 1), numbers, button('下一页', outfitPage + 1, outfitPage === pages));
-  if (category === 'ride') cards.before(pagination);
-  else outfitGallery.append(pagination);
+    numbers.append(b);
+  }
+  pagination.append(numbers);
+  outfitGallery.append(pagination);
 }
 
 function outfitPoster(row) {
@@ -468,7 +436,7 @@ function openOutfitPreview(row, trigger) {
   outfitStage.classList.toggle('is-portrait-ride', row.category === 'ride' && row.group === '3:4');
   $('#outfit-preview-title').textContent = row.title;
   outfitStage.replaceChildren(outfitPoster(row));
-  outfitPNG.src = row.png;
+  outfitPNG.src = row.cover;
   outfitPNG.alt = `${row.title}的透明缩略图`;
   outfitStatus.hidden = true;
   outfitDialog.showModal();

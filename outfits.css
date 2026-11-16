@@ -1,12 +1,4 @@
 #mimoon-collection-preview {
-  .pagination.ride-pagination {
-    flex-wrap:nowrap;
-    gap:6px;
-    padding:0;
-    margin:0 0 14px;
-  }
-  .ride-pagination .page-numbers {flex-basis:auto;order:0;gap:4px}
-  .ride-pagination .page-button {min-width:34px;padding-inline:8px;white-space:nowrap}
   .outfit-gallery-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:25px 0 15px}
   .outfit-gallery-heading h3{margin:0;color:#38244f;font-size:20px}.outfit-gallery-heading p{margin:0;color:#6d537f;font-size:12px}
   .outfit-group-switch{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:17px}
